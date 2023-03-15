@@ -13,6 +13,8 @@ class Detector:
 
     def draw(self, canvas: TCanvas) -> None:
         # Draw the detector canvas
+        self.boundaries.graph.GetXaxis().SetTitle("z [mm]")
+        self.boundaries.graph.GetYaxis().SetTitle("radius [mm]")
         self.boundaries.graph.SetLineColor(0)
         self.boundaries.graph.SetMarkerColor(0)
         self.boundaries.graph.SetFillColor(0)
