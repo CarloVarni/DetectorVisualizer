@@ -5,7 +5,7 @@ class Grid:
     def __init__(self,
                  boundaries: list):
         self.boundaries = boundaries
-
+        
     def draw(self,
              canvas: TCanvas,
              floorCeiling: Range1D):
