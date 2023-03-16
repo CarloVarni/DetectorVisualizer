@@ -7,6 +7,7 @@ from core.Detector import Detector
 from ROOT import TCanvas, TGraph, TLine, TH1D, TLatex
 
 from examples.ITkPixelDetector import ITkPixelDetector
+from examples.ITkStripDetector import ITkStripDetector
 
 if __name__ == "__main__":
     import math
@@ -14,12 +15,13 @@ if __name__ == "__main__":
     
     pixelGridBoundaries = [-3000, -2500, -1400, -925, -450, -250, 250, 450, 925, 1400, 2500, 3000]
 
-    rangeR = Range1D(0, 350)
+    rangeR = Range1D(0, 1100)
     rangeZ = Range1D(pixelGridBoundaries[0], pixelGridBoundaries[len(pixelGridBoundaries) - 1])
     rangeInclusive = Range1D(-4000, 4000)
     
     grid = Grid(pixelGridBoundaries)
-    pixels = ITkPixelDetector(rangeR, rangeZ, rangeInclusive)
+    pixels = ITkPixelDetector(rangeR, rangeZ, rangeInclusive) #
+    strips = ITkStripDetector(rangeR, rangeZ, rangeInclusive) #
     
     # Get The seeds
     grs = []
@@ -42,7 +44,8 @@ if __name__ == "__main__":
     canvas = TCanvas()
     canvas.SetTicks()
     pixels.draw(canvas)
-
+    strips.draw(canvas, "SAME")
+    
     # Pseudo-Rapidity Lines
     line_eta = TLine()
     line_eta.SetLineStyle(3)
@@ -62,8 +65,7 @@ if __name__ == "__main__":
 
     for gr in grs:
         gr.Draw("PLSAME")
-    grid.draw(canvas, Range1D(0, 350))
-
+    grid.draw(canvas, rangeR)
     canvas.Draw()
     canvas.SaveAs("PixelDetector.pdf")
     canvas.SaveAs("PixelDetector.png")

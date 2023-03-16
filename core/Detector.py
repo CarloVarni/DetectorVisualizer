@@ -11,7 +11,9 @@ class Detector:
                    element: DetectorElement) -> None:
         self.elements.append(element)
 
-    def draw(self, canvas: TCanvas) -> None:
+    def draw(self,
+             canvas: TCanvas,
+             options: str = "") -> None:
         # Draw the detector canvas
         self.boundaries.graph.GetXaxis().SetTitle("z [mm]")
         self.boundaries.graph.GetYaxis().SetTitle("radius [mm]")
@@ -19,7 +21,7 @@ class Detector:
         self.boundaries.graph.SetMarkerColor(0)
         self.boundaries.graph.SetFillColor(0)
         self.boundaries.graph.SetMarkerSize(0)
-        self.boundaries.draw(canvas, "AP")
+        self.boundaries.draw(canvas, "AP" if options == "" else "PSAME")
 
         # Draw the other elements
         for element in self.elements:
