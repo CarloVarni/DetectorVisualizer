@@ -33,18 +33,31 @@ if __name__ == "__main__":
     line_eta.SetLineStyle(3)
     line_eta.SetLineColorAlpha(4, 1)
 
+    latex = TLatex()
+                
     # [eta 1, eta 2, eta 3, eta 4]
-    for theta in [0.704774, 0.268779, 0.0987791, 0.0357791]:        
+    thetas = [0.704774, 0.268779, 0.0987791, 0.0357791]
+    etas = [1, 2, 3, 4]
+    for i in range(0, len(thetas)):
+        theta = thetas[i]
+        eta = etas[i]
+
         y_value_atLimitZ = math.tan(theta) * rangeZ.maximum()
         x_value_atLimitR = rangeR.maximum()/math.tan(theta)
 
         if x_value_atLimitR < rangeZ.maximum():
             line_eta.DrawLine( 0, 0, x_value_atLimitR, rangeR.maximum() )
             line_eta.DrawLine( 0, 0, -x_value_atLimitR, rangeR.maximum() )
+            text = "#scale[0.5]{#color[4]{#eta = " + str(eta) + "}}"
+            latex.DrawLatex( x_value_atLimitR, 1.02 * rangeR.maximum(), text)
+            latex.DrawLatex( - x_value_atLimitR, 1.02 * rangeR.maximum(), text)
         else:
             line_eta.DrawLine( 0, 0, rangeZ.maximum(), y_value_atLimitZ)
             line_eta.DrawLine( 0, 0, -rangeZ.maximum(), y_value_atLimitZ)
-        
+            text = "#scale[0.5]{#color[4]{#eta = " + str(eta) + "}}"
+            latex.DrawLatex( 1.05 * rangeZ.maximum(), y_value_atLimitZ, text)
+            latex.DrawLatex( 1.15 * rangeZ.minimum(), y_value_atLimitZ, text)
+            
     grid.draw(canvas, rangeR)
     canvas.Draw()
     canvas.SaveAs("PixelDetector.pdf")
