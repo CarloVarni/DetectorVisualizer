@@ -65,16 +65,20 @@ def ITkPixelDetector(rangeR: Range1D,
     inner_endcap_layers.append(DetectorElement(Point(749, 42.8), height=20.1, width=4, angle=0.))
     inner_endcap_layers.append(DetectorElement(Point(835, 42.8), height=20.1, width=4, angle=0.))
     inner_endcap_layers.append(DetectorElement(Point(925, 42.8), height=20.1, width=4, angle=0.))
-    inner_endcap_layers.append(DetectorElement(Point(1026, 44.9), height=15.8, width=4, angle=0.))
-    inner_endcap_layers.append(DetectorElement(Point(1142, 47.5), height=11.55, width=4, angle=0.))
+    inner_endcap_layers.append(DetectorElement(Point(1026, 42.8), height=20.1, width=4, angle=0.))
+    inner_endcap_layers.append(DetectorElement(Point(1142, 42.8), height=20.1, width=4, angle=0.))
+#    inner_endcap_layers.append(DetectorElement(Point(1026, 44.9), height=15.8, width=4, angle=0.))
+#    inner_endcap_layers.append(DetectorElement(Point(1142, 47.5), height=11.55, width=4, angle=0.))
 
     # Intermediate Rings
     inner_endcap_layers.append(DetectorElement(Point(1103, 68.3), height=19.7, width=4, angle=0.))
     inner_endcap_layers.append(DetectorElement(Point(1229, 68.3), height=19.7, width=4, angle=0.))
     inner_endcap_layers.append(DetectorElement(Point(1359, 68.3), height=19.7, width=4, angle=0.))
     inner_endcap_layers.append(DetectorElement(Point(1503, 68.3), height=19.7, width=4, angle=0.))
-    inner_endcap_layers.append(DetectorElement(Point(1665, 69.85), height=18.1, width=4, angle=0.))
-    inner_endcap_layers.append(DetectorElement(Point(1846, 73.14), height=11.4, width=4, angle=0.))
+    inner_endcap_layers.append(DetectorElement(Point(1665, 68.3), height=19.7, width=4, angle=0.))
+    inner_endcap_layers.append(DetectorElement(Point(1846, 68.3), height=19.7, width=4, angle=0.))
+#    inner_endcap_layers.append(DetectorElement(Point(1665, 69.85), height=18.1, width=4, angle=0.))
+#    inner_endcap_layers.append(DetectorElement(Point(1846, 73.14), height=11.4, width=4, angle=0.))
 
     # Inner Rings - Quads
     inner_endcap_layers.append(DetectorElement(Point(263, 100.1), height=42, width=4, angle=0.))
@@ -98,8 +102,10 @@ def ITkPixelDetector(rangeR: Range1D,
     inner_endcap_layers.append(DetectorElement(Point(1721, 100.1), height=42, width=4, angle=0.))
     inner_endcap_layers.append(DetectorElement(Point(1909, 100.1), height=42, width=4, angle=0.))
     inner_endcap_layers.append(DetectorElement(Point(2120, 100.1), height=42, width=4, angle=0.))
-    inner_endcap_layers.append(DetectorElement(Point(2357, 104.07), height=35.63, width=4, angle=0.))
-    inner_endcap_layers.append(DetectorElement(Point(2621, 108.8), height=25.86, width=4, angle=0.))
+    inner_endcap_layers.append(DetectorElement(Point(2357, 100.1), height=42, width=4, angle=0.))
+    inner_endcap_layers.append(DetectorElement(Point(2621, 100.1), height=42, width=4, angle=0.))
+#    inner_endcap_layers.append(DetectorElement(Point(2357, 104.07), height=35.63, width=4, angle=0.))
+#    inner_endcap_layers.append(DetectorElement(Point(2621, 108.8), height=25.86, width=4, angle=0.))
     
     for layer in inner_endcap_layers:
         simmetric_layer = DetectorElement(Point(-layer.center[0], layer.center[1]), layer.height, layer.width)

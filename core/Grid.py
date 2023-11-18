@@ -15,6 +15,7 @@ class Grid:
 
             line = TLine()
             line.SetLineStyle(2)
+            line.SetLineColorAlpha(1, 0.5)
             line.DrawLine(val, floorCeiling.minimum(), val, floorCeiling.maximum())
             
             if i == len(self.boundaries) - 1:
