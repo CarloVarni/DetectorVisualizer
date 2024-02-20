@@ -8,25 +8,28 @@ from ROOT import TCanvas, TGraph, TLine, TH1D, TLatex
 
 from examples.ITkPixelDetector import ITkPixelDetector
 from examples.ITkStripDetector import ITkStripDetector
+from examples.HgtdDetector import HgtdDetector
 
 if __name__ == "__main__":
     import math
     import re
     
-    pixelGridBoundaries = [-3000, -2500, -1400, -925, -450, -250, 250, 450, 925, 1400, 2500, 3000]
+    pixelGridBoundaries = [-4000, -3000, -2500, -1400, -925, -450, -250, 250, 450, 925, 1400, 2500, 3000, 4000]
 
     rangeR = Range1D(0, 1100)
     rangeZ = Range1D(pixelGridBoundaries[0], pixelGridBoundaries[len(pixelGridBoundaries) - 1])
     rangeInclusive = Range1D(-4000, 4000)
     
     grid = Grid(pixelGridBoundaries)
-    pixels = ITkPixelDetector(rangeR, rangeZ, rangeInclusive) #
-    strips = ITkStripDetector(rangeR, rangeZ, rangeInclusive) #
-                
+    pixels = ITkPixelDetector(rangeR, rangeZ, rangeInclusive)
+    strips = ITkStripDetector(rangeR, rangeZ, rangeInclusive)
+    hgtd = HgtdDetector(rangeR, rangeZ, rangeInclusive)
+    
     canvas = TCanvas("canvas", "canvas")
     canvas.SetTicks()
     pixels.draw(canvas)
     strips.draw(canvas, "SAME")
+    hgtd.draw(canvas, "SAME")
     
     # Pseudo-Rapidity Lines
     line_eta = TLine()
