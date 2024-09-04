@@ -1,35 +1,72 @@
-from core.Range1D import Range1D
-from core.Point import Point
-from core.Grid import Grid
-from core.DetectorElement import DetectorElement
-from core.Detector import Detector
 
-from ROOT import TCanvas, TGraph, TLine, TH1D, TLatex
-
-from examples.ITkPixelDetector import ITkPixelDetector
-from examples.ITkStripDetector import ITkStripDetector
-from examples.HgtdDetector import HgtdDetector
-
-if __name__ == "__main__":
+def main():
+    from core.Range1D import Range1D
+    from core.Point import Point
+    from core.Grid import Grid
+    from core.DetectorElement import DetectorElement
+    from core.Detector import Detector
+    
+    from ROOT import TCanvas, TGraph, TLine, TH1D, TLatex
+    
+    from examples.ITkPixelDetector import ITkPixelDetector
+    from examples.ITkStripDetector import ITkStripDetector
+    from examples.HgtdDetector import HgtdDetector
+    
     import math
     import re
     
-    pixelGridBoundaries = [-4000, -3000, -2500, -1400, -925, -450, -250, 250, 450, 925, 1400, 2500, 3000, 4000]
+    pixelGridBoundaries = [-3000, -2700, -2500, -1400, -925, -450, -250, 250, 450, 925, 1400, 2500, 2700, 3000]
 
-    rangeR = Range1D(0, 1100)
+    rangeR = Range1D(0, 400)
     rangeZ = Range1D(pixelGridBoundaries[0], pixelGridBoundaries[len(pixelGridBoundaries) - 1])
     rangeInclusive = Range1D(-4000, 4000)
     
     grid = Grid(pixelGridBoundaries)
-    pixels = ITkPixelDetector(rangeR, rangeZ, rangeInclusive)
-    strips = ITkStripDetector(rangeR, rangeZ, rangeInclusive)
-    hgtd = HgtdDetector(rangeR, rangeZ, rangeInclusive)
-    
+    detectors = [
+        ITkPixelDetector(rangeR, rangeZ, rangeInclusive),
+#        ITkStripDetector(rangeR, rangeZ, rangeInclusive),
+#        HgtdDetector(rangeR, rangeZ, rangeInclusive)
+    ]
+
+    validityRangesMiddle = [
+        (0, 0),
+        (40, 90),
+        (40, 200),
+        (46, 200),
+        (46, 200),
+        (46, 250),
+        (46, 250),
+        (46, 250),
+        (46, 200),
+        (46, 200),
+        (40, 200),
+        (40, 90),
+        (0, 0)
+    ]
+    assert len(validityRangesMiddle) == len(pixelGridBoundaries) - 1
+    validityRangeGraph = []
+
+    for i in range(0, len(validityRangesMiddle)):
+        (rmin, rmax) = validityRangesMiddle[i]
+        zmin = pixelGridBoundaries[i]
+        zmax = pixelGridBoundaries[i + 1]
+
+        gr = TGraph()
+        gr.SetFillColorAlpha(2, 0.5)
+        gr.SetPoint(0, zmin, rmin)
+        gr.SetPoint(1, zmax, rmin)
+        gr.SetPoint(2, zmax, rmax)
+        gr.SetPoint(3, zmin, rmax)
+        gr.SetPoint(4, zmin, rmin)
+        validityRangeGraph.append(gr)
+        
     canvas = TCanvas("canvas", "canvas")
     canvas.SetTicks()
-    pixels.draw(canvas)
-    strips.draw(canvas, "SAME")
-    hgtd.draw(canvas, "SAME")
+    for i in range(0, len(detectors)):
+        if i == 0:
+            detectors[i].draw(canvas)
+        else:
+            detectors[i].draw(canvas, "SAME")
     
     # Pseudo-Rapidity Lines
     line_eta = TLine()
@@ -62,7 +99,13 @@ if __name__ == "__main__":
             latex.DrawLatex( 1.15 * rangeZ.minimum(), y_value_atLimitZ, text)
             
     grid.draw(canvas, rangeR)
+
+    for gr in validityRangeGraph:
+        gr.Draw("F SAME")
+
     canvas.Draw()
     canvas.SaveAs("PixelDetector.pdf")
     canvas.SaveAs("PixelDetector.png")
     
+if __name__ == "__main__":
+    main()
